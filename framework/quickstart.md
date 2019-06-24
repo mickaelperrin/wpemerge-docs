@@ -24,7 +24,9 @@
     require_once( 'vendor/autoload.php' );
  
     add_action( 'init', function() {
-        session_start(); // required only if you use Flash and OldInput
+        if (session_status() !== PHP_SESSION_DISABLED && (!defined('WP_CLI') || false === WP_CLI) && !(defined('DOING_CRON') && DOING_CRON)) {
+            session_start(); // required only if you use Flash and OldInput
+        }
     } );
 
     add_action( 'after_setup_theme', function() {
